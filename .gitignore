@@ -1,33 +1,19 @@
-HELP.md
+# General Java & Spring Boot
 target/
+*.class
+*.log
 .mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea
+# IntelliJ IDEA
+.idea/
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+# Package Files
+*.jar
+*.war
+*.zip
 
-### VS Code ###
-.vscode/
+# Project Data (Optional: ignore your local data files if they contain private info)
+# data/*.txt
