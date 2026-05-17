@@ -1,13 +1,16 @@
+
 package com.example.eventbookingsystem.controller;
 
-import com.example.eventbookingsystem.model.User;
-import com.example.eventbookingsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.example.eventbookingsystem.model.User;
+import com.example.eventbookingsystem.service.UserService;
+
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -58,11 +61,25 @@ public class UserController {
 
     // GET /editUser - show edit form pre-filled with current data
     @GetMapping("/editUser")
-    public String showEditForm(HttpSession session, Model model) {
-        User user = (User) session.getAttribute("loggedUser");
+    public String showEditForm(
+            @RequestParam(required = false) Integer id,
+            HttpSession session,
+            Model model) {
+
+        User user;
+        if (id != null) {
+            // Admin editing another user
+            user = userService.getUserById(id);
+        } else {
+            // User editing their own profile
+            user = (User) session.getAttribute("loggedUser");
+        }
+
         if (user == null) {
             return "redirect:/login";
         }
+
+        session.setAttribute("editingUser", user);
         return "editProfile";
     }
 
@@ -74,7 +91,10 @@ public class UserController {
             HttpSession session,
             Model model) {
 
-        User user = (User) session.getAttribute("loggedUser");
+        User user = (User) session.getAttribute("editingUser");
+        if (user == null) {
+            user = (User) session.getAttribute("loggedUser");
+        }
         if (user == null) {
             return "redirect:/login";
         }
@@ -83,10 +103,13 @@ public class UserController {
         user.setPassword(password);
         userService.updateUser(user);
 
-        // Update session with new details
-        session.setAttribute("loggedUser", user);
-        session.setAttribute("userName", name);
+        // Update session if editing own profile
+        User loggedUser = (User) session.getAttribute("loggedUser");
+        if (loggedUser != null && loggedUser.getId() == user.getId()) {
+            session.setAttribute("loggedUser", user);
+            session.setAttribute("userName", name);
+        }
 
-        return "redirect:/editUser?msg=updated";
+        return "redirect:/users";
     }
 }
