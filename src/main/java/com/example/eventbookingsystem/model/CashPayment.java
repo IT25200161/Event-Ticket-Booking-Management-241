@@ -12,12 +12,12 @@ public class CashPayment extends Payment {
         super(bookingId, customerName, amount, "CASH");
 
         this.amountReceived = amountReceived;
-        this.changeGiven    = amountReceived - amount; // Pre-calculate change
+        this.changeGiven    = amountReceived - amount;
     }
 
     public CashPayment() {
         super();
-        setPaymentMethod("CASH"); // Always CASH for this class
+        setPaymentMethod("CASH");
     }
 
     @Override
@@ -31,7 +31,7 @@ public class CashPayment extends Payment {
         }
 
         setStatus("COMPLETED");
-        this.changeGiven = amountReceived - getAmount(); // Recalculate change
+        this.changeGiven = amountReceived - getAmount();
 
         return "Cash payment of Rs." + String.format("%.2f", getAmount())
                 + " received successfully. "

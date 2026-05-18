@@ -17,6 +17,7 @@ public abstract class Payment {
         this.amount        = amount;
         this.paymentMethod = paymentMethod;
         this.status        = "PENDING";
+
     }
 
     public Payment() {}
@@ -76,13 +77,9 @@ public abstract class Payment {
 
     @Override
     public String toString() {
-        return "Payment{" +
-                "paymentId=" + paymentId +
-                ", bookingId=" + bookingId +
-                ", customerName='" + customerName + '\'' +
-                ", amount=" + amount +
-                ", method='" + paymentMethod + '\'' +
-                ", status='" + status + '\'' +
+        return "Payment{" + "paymentId=" + paymentId +
+                ", bookingId=" + bookingId + ", customerName='" + customerName + '\'' +
+                ", amount=" + amount + ", method='" + paymentMethod + '\'' + ", status='" + status + '\'' +
                 '}';
     }
 }
