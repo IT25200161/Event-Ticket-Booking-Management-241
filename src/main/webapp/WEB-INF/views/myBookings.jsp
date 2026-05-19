@@ -49,6 +49,7 @@
 <nav class="navbar px-4">
     <span class="navbar-brand">🎟️ EventTicket</span>
     <a href="${pageContext.request.contextPath}/booking" class="btn btn-new">+ New Booking</a>
+    <!--<a href="http://localhost:8080/event-page" class="btn-back" style="color:#c9d8f0; text-decoration:none; font-size:13px;">← Back to Events</a>-->
 </nav>
 
 <div class="container py-5">

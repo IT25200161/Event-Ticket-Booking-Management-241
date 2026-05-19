@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.example.eventbookingsystem.model.User;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class BookingServlet {
@@ -53,7 +54,12 @@ public class BookingServlet {
             @RequestParam double totalPrice,
             @RequestParam String bookingType,
             @RequestParam int numSeats,
+            HttpServletRequest request,
             Model model) {
+
+        User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+        String customerName = loggedUser != null ? loggedUser.getName() : "Guest";
+
 
 
         Booking booking;
@@ -69,7 +75,12 @@ public class BookingServlet {
         boolean success = bookingDAO.addBooking(booking);
 
         if (success) {
-            return "redirect:/viewBookings";
+            List<Booking> userBookings = bookingDAO.getBookingsByUserId(userId);
+            int latestBookingId = userBookings.get(userBookings.size() - 1).getBookingId();
+
+            return "redirect:/payment?bookingId=" + latestBookingId
+                    + "&amount=" + totalPrice
+                    + "&customerName=" + customerName;
         } else {
             model.addAttribute("error", "Booking failed! Please try again.");
             return "bookingForm";

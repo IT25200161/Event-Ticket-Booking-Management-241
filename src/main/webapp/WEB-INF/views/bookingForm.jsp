@@ -58,7 +58,7 @@
 
 <nav class="navbar px-4">
     <span class="navbar-brand">🎟️ EventTicket</span>
-    <a href="${pageContext.request.contextPath}/viewEvents" class="btn btn-back btn-sm">← Back to Events</a>
+    <a href="http://localhost:8080/event-page" class="btn-back">← Back to Events</a>
 </nav>
 
 <div class="container-fluid py-5 px-5">
